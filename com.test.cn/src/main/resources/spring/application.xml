@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+ <!-- spring配置文件的 核心点(数据源，与mybatis整合，事物控制)-->
+ <context:property-placeholder location="classpath:properties/ojdbc.properties"/> 
+<context:component-scan base-package="com.test" use-default-filters="true">
+	 <!-- 扫描除Controllelr以外的包 -->
+ <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+ </context:component-scan>
+ 
+ <!---数据源的配置-->
+ <bean id="dpoolDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  
+        destroy-method="close">  
+        <property name="driverClass" value="${test.driverClass}" />  
+        <property name="jdbcUrl" value="${test.jdbcUrl}" />  
+        <property name="user" value="${test.user}" />  
+        <property name="password" value="${test.password}" />   
+  </bean> 
+ 
+   
+  <!--配置和MyBatis的整合-->  
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+  <!-- 指定mybatis全局配置文件的位置 -->
+  <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
+  <property name="dataSource" ref="dpoolDataSource"></property>
+  <!-- 指定mybatis mapper文件的位置 -->
+  <property name="mapperLocations" value="classpath:mapping/*.xml"></property>
+  </bean>
+  
+    <!-- 配置扫描器，将mybatis接口的实现加入到ioc容器中 -->
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+   <!-- 扫描所以dao接口的实现 ，加入到ioc容器中-->
+   <property name="basePackage" value="com.test.cn.dao"></property>
+   </bean>
+   
+   <!-- 配置一个可以执行批量的sqlsession  -->
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+   <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+       <!-- 会导致添加删除修改操作返回结果丢失 -->
+ <!--   <constructor-arg name="executorType" value="BATCH"></constructor-arg> -->
+   </bean>
+ 
+   <!--事物控制配置-->
+   <!-- 事务管理器        对mybatis操作数据库进行事务控制，spring使用jdbc的事务控制类 -->    
+  <!--   <bean id="transactionManager" 
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+         <property name="dataSource" ref="dpoolDataSource" />
+    </bean> -->
+    <!-- 开启基于注解的事物或xml形式的配置事物 -->
+    <!-- 注解式事务-->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+     <!-- aop -->
+    <!-- <aop:config> -->
+    <!-- 切入点表达式 -->
+   <!--  <aop:pointcut expression="execution(* com.test.cn.service.impl..*(..))" id="txpoint"/>
+    --> <!-- 配置事物增强 -->
+  <!--   <aop:advisor advice-ref="txAdvice" pointcut-ref="txpoint"/>
+	</aop:config>
+	 --><!-- 事物如何切入 -->
+   <!--  <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes> -->
+            <!-- 传播行为-->
+          <!--   <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="query*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>  -->
+
+</beans>

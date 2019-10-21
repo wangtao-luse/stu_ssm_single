@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<welcome-file-list>  
+   <welcome-file>/index.jsp</welcome-file>  
+</welcome-file-list>
+	<!-- spring容器 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring/application.xml</param-value>
+	</context-param>
+	<listener>
+	 	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener> 
+	<!-- springmvc 前端控制器 -->
+	 <servlet>
+		<servlet-name>springMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 可以自定义servlet.xml配置文件的位置和名称，默认为WEB-INF目录下，名称为[<servlet-name>]-servlet.xml，如springMVC-servlet.xml -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc/springMVC-servlet.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!--字符编码过滤器-->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+            <param-name>forcezRequestEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceResponseEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+	</filter>
+	<filter-mapping>
+	 	<filter-name>encodingFilter</filter-name>
+	 	<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+	
+	 <!-- 使用rest风格的URI 将页面普通的页面请求转换为deleted或put请求 -->
+    <filter>
+    <filter-name>HiddenHttpMethodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+     <filter-mapping>    
+              <filter-name>HiddenHttpMethodFilter</filter-name>    
+              <url-pattern>/*</url-pattern>
+      </filter-mapping> 
+      <servlet>
+    <servlet-name>hessianServlet</servlet-name>
+    <servlet-class>com.caucho.hessian.server.HessianServlet</servlet-class>
+    <init-param>
+    <!--接口实现类，此处param-name可配置的名称有：home-class、service-class、object-class-->
+      <param-name>home-class</param-name>
+      <param-value>com.test.cn.hessian.BaseHessianImpl</param-value>
+    </init-param>
+      <init-param>
+      <!--接口，param-name可配置的名称有：home-api、api-class、object-api（可不配置）-->
+          <param-name>home-api</param-name>
+          <param-value>com.test.cn.hessian.BaseHessian</param-value>
+      </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>hessianServlet</servlet-name>
+    <url-pattern>/hessian</url-pattern>
+ </servlet-mapping>
+
+	</web-app>

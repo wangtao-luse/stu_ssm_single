@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>test</groupId>
+  <artifactId>com.test.cn</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>com.test.cn Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+   <!-- spring webmvc -->
+    <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-webmvc</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency>
+	<!-- spring jdbc（事务控制） -->
+    <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-jdbc</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency>
+	<!--spring 面向切面  -->
+    <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-aspects</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	</dependency>
+	
+	<!-- spring单元测试 -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>4.3.7.RELEASE</version>
+	    <scope>test</scope>
+	</dependency>
+	
+    <!-- mybatis -->
+    <dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	    <version>3.4.2</version>
+	</dependency>
+	<!-- mybatis适配spring的jar -->
+    <dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis-spring</artifactId>
+	    <version>1.3.1</version>
+	</dependency>
+	<!-- mybatis generator -->
+	<dependency>
+	    <groupId>org.mybatis.generator</groupId>
+	    <artifactId>mybatis-generator-core</artifactId>
+	    <version>1.3.6</version>
+	</dependency>
+	<!-- mybatis pageHelper -->
+	<dependency>
+	    <groupId>com.github.pagehelper</groupId>
+	    <artifactId>pagehelper</artifactId>
+	    <version>5.1.2</version>
+	</dependency>
+	
+    <!-- 数据库连接池jar，驱动jar -->
+    <dependency>
+	    <groupId>com.oracle</groupId>
+  		<artifactId>ojdbc14</artifactId>
+  		<version>10.2.0.4.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>c3p0</groupId>
+	    <artifactId>c3p0</artifactId>
+	    <version>0.9.1.2</version>
+	</dependency>
+	
+	<!-- 对java.lang的拓展 -->
+	<dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-lang3</artifactId>
+    	<version>3.4</version>
+	</dependency>
+	<!-- @ResponseBody返回json数据支持 （spring默认支持jackson和gson）-->
+	 <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.5</version>
+   </dependency> 
+	<dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.0</version>
+	</dependency>
+	<dependency>
+	   <groupId>com.alibaba</groupId>
+	   <artifactId>fastjson</artifactId>
+	   <version>1.2.47</version>
+	</dependency>
+	<!-- JSR303校验支持，tomacat7及以上服务器 -->
+	<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>5.1.1.Final</version>
+</dependency>
+
+
+	
+    <!-- 其他jar jstl,servlet-api,junit -->
+    <dependency>
+	    <groupId>jstl</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+    <dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>3.1.0</version>
+	    <scope>provided</scope>
+	</dependency>
+	<dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.12</version>
+	    <scope>test</scope>
+	</dependency>
+	   <dependency>
+    <groupId>com.caucho</groupId>
+    <artifactId>hessian</artifactId>
+    <version>4.0.51</version>
+</dependency>
+  </dependencies>
+  <build>
+    <finalName>com.test.cn</finalName>
+  </build>
+</project>

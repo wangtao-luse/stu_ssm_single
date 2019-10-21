@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 
+创建并填写适当的配置文件。 至少,您必须指定:
+    一个 < jdbcConnection > 元素来指定如何连接 目标数据库
+    一个 < javaModelGenerator > 元素指定目标方案 为生成的Java模型对象和目标项目
+    一个 < sqlMapGenerator > 元素指定目标方案 和目标项目生成的SQL映射文件
+    (可选) < javaClientGenerator > 元素指定目标方案 和目标项目(您可能生成的客户机接口和类 省略了 < javaClientGenerator > 元素,如果你不希望生成Java客户机代码)
+    至少一个数据库 <表> 元素
+保存文件在某些方便的位置(如\ temp \ generatorConfig.xml)
+从命令行运行MBG的命令如下: 
+ java -jar mybatis-generator-core-x.x.x.jar -configfile \temp\generatorConfig.xml -overwrite
+   这将告诉MBG运行使用您的配置文件。 它也将告诉MBG 覆盖任何现有的Java文件使用相同的名字。 如果你想保存任何现有的 Java文件,然后省略了 覆盖 参数。 如果有一个冲突,MBG 将与一个唯一的名称保存新生成的文件(例如MyClass.java.1)。
+MBG运行之后,您将需要创建或修改标准MyBatis或iBATIS 配置文件使用您新生成的代码。 
+ -->
+<generatorConfiguration>
+<!-- <classPathEntry  location="mysql-connector-java-5.1.25-bin.jar"/>   -->
+<!-- 配置数据库连接信息 -->
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+  	<commentGenerator>    
+            <property name="suppressDate" value="true"/>    
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->    
+            <property name="suppressAllComments" value="true"/>    
+        </commentGenerator>  
+     <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+        connectionURL="jdbc:oracle:thin:@localhost:1521:orcl"
+        userId="scott"
+        password="accp">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    <!-- javaBean 生成位置 -->
+    <javaModelGenerator targetPackage="com.test.cn.model" targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+   <!-- 指定sql映射文件位置 -->
+    <sqlMapGenerator targetPackage="mapping"  targetProject=".\src\main\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+     <!-- 指定dao生成接口的位置 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.test.cn.dao"  targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+    <!-- 指定每个表的生成策略 -->
+    <!-- 
+    domainObjectName:
+      	 生成的基本名称生成对象名称。 如果没有指定,MBG将自动生成一个名称的基础上 表名。 
+      	 这里指定的名称(或生成 自动)将被用来计算生成域类的名字 和DAO类名称。
+	         您可以指定一个包碎片在域对象的名字。 例如, 如果您指定 foo.Bar 那么域对象 酒吧 和包 喷火 将附加 到目标包发电机配置中指定
+     -->
+     <table tableName="Emp" domainObjectName="Emp" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+     <table tableName="Dept" domainObjectName="Dept" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+  </context>
+</generatorConfiguration>

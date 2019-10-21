@@ -1,0 +1,11 @@
+*/.git/*
+*/target/*
+.classpath
+.deployables
+.git
+.project
+.settings
+.svn
+-svn
+target
+*.class

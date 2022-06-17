@@ -92,7 +92,7 @@
 	<dependency>
 	   <groupId>com.alibaba</groupId>
 	   <artifactId>fastjson</artifactId>
-	   <version>1.2.47</version>
+	   <version>1.2.83</version>
 	</dependency>
 	<!-- JSR303校验支持，tomacat7及以上服务器 -->
 	<dependency>
